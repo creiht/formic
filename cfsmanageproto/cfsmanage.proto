@@ -20,7 +20,7 @@ service CfsManageApi {
   rpc UpdateFs (UpdateFsRequest) returns (UpdateFsResponse) {}
   rpc GrantAddrFs (GrantAddrFsRequest) returns (GrantAddrFsResponse) {}
   rpc RevokeAddrFs (RevokeAddrFsRequest) returns (RevokeAddrFsResponse) {}
-  rpc ValidiateAddrFs (ValidateAddrFsRequest) returns (ValidiateAddrFsResponse) {}
+  rpc ValidiateAddrFs (ValidateAddrFsRequest) returns (ValidateAddrFsResponse) {}
 }
 
 // Account Profile
@@ -200,6 +200,6 @@ message ValidateAddrFsRequest {
     IPAddress   addr        = 4;
 }
 // Response from validating an addr has access to a file system
-message ValidiateAddrFsResponse {
+message ValidateAddrFsResponse {
     string      status      = 1;
 }
