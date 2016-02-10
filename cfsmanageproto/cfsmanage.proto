@@ -31,6 +31,7 @@ message Account {
   string    apikey        = 4;
   string    status        = 5;
   int64     createDate    = 6;
+  int64     deleteDate    = 7;
 }
 
 // FileSystem Profile
