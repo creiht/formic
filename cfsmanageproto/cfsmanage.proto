@@ -1,0 +1,205 @@
+// cfsmanage proto file
+// protoc --go_out=plugins=grpc:. *.proto
+
+
+syntax = 'proto3';
+
+package cfsmanage;
+
+// Message service definition for the cfsManageApi
+service CfsManageApi {
+  // Account commands
+  rpc CreateAcct (CreateAcctRequest) returns (CreateAcctResponse) {}
+  rpc ShowAcct (ShowAcctRequest) returns (ShowAcctResponse) {}
+  rpc DeleteAcct(DeleteAcctRequest) returns (DeleteAcctResponse) {}
+  rpc UpdateAcct(UpdateAcctRequest) returns (UpdateAcctResponse) {}
+  // File System commands
+  rpc CreateFs (CreateFsRequest) returns (CreateFsResponse) {}
+  rpc ShowFs (ShowFsRequest) returns (ShowFsResponse) {}
+  rpc DeleteFs (DeleteFsRequest) returns (DeleteFsResponse) {}
+  rpc UpdateFs (UpdateFsRequest) returns (UpdateFsResponse) {}
+  rpc GrantAddrFs (GrantAddrFsRequest) returns (GrantAddrFsResponse) {}
+  rpc RevokeAddrFs (RevokeAddrFsRequest) returns (RevokeAddrFsResponse) {}
+  rpc ValidiateAddrFs (ValidateAddrFsRequest) returns (ValidateAddrFsResponse) {}
+}
+
+// Account Profile
+message Account {
+  string    id            = 1;
+  string    name          = 2;
+  string    region        = 3;
+  string    apikey        = 4;
+  string    status        = 5;
+  int64     createDate    = 6;
+  int64     deleteDate    = 7;
+}
+
+// FileSystem Profile
+message FileSystem {
+  string  id              = 1;
+  string  name            = 2;
+  string  region          = 3;
+  string  status          = 4;
+  int64   createDate      = 5;
+  int64   deleteDate      = 6;
+}
+
+// IP Address Profile
+message IPAddress {
+  string  addr            = 1;
+}
+
+// Request to Create an account
+message CreateAcctRequest {
+  string    region        = 1;
+  string    acct          = 2;
+  string    superkey      = 3;
+}
+
+// Response for account Create results
+message CreateAcctResponse {
+  string    status        = 2;
+}
+
+// Request to show an account
+message ShowAcctRequest {
+  string    region        = 1;
+  string    acct          = 2;
+  string    superkey      = 3;
+}
+
+// Response for account Show results
+message ShowAcctResponse {
+  Account   account       = 1;
+  string    status        = 2;
+}
+
+// Request to Delete account
+message DeleteAcctRequest {
+  string    region        = 1;
+  string    acct          = 2;
+  string    superkey      = 3;
+}
+
+// Response for account Delete results
+message DeleteAcctResponse {
+  string    status        = 2;
+}
+
+// Request to Update account's api key
+message UpdateAcctRequest {
+  string    region        = 1;
+  string    acct          = 2;
+  string    superkey      = 3;
+  string    newapikey     = 4;
+}
+
+// Response for account Update results
+message UpdateAcctResponse {
+  Account   account       = 1;
+  string    status        = 2;
+}
+
+// Request to create a new filesystem
+message CreateFsRequest {
+  string  region          = 1;
+  string  acct            = 2;
+  string  filesys         = 3;
+  string  username        = 4;
+  string  apikey          = 5;
+  string  address         = 6;
+}
+
+// Response from creating a new filesystem
+message CreateFsResponse {
+  string  status         = 1;
+}
+
+// Request to either show a specific file system or
+// all the file systems
+message ShowFsRequest{
+  string region          = 1;
+  string acct            = 2;
+  string filesys         = 3;
+  string username        = 4;
+  string apikey          = 5;
+}
+
+// Response from showing either an accounts specific
+// file system or a list of all an accounts file systems.
+message ShowFsResponse {
+  repeated FileSystem   filesystems      = 1;
+  repeated IPAddress    ipaddresses      = 2;
+  string                status           = 3;
+}
+
+// Request to delete a specific file system
+message DeleteFsRequest {
+  string region          = 1;
+  string acct            = 2;
+  string filesys         = 3;
+  string username        = 4;
+  string apikey          = 5;
+}
+
+// Response from deleting a file system
+message DeleteFsResponse {
+  string status          = 1;
+}
+
+// Request to update a specific file system's information
+message UpdateFsRequest {
+  string        region          = 1;
+  string        acct            = 2;
+  string        filesys         = 3;
+  string        username        = 4;
+  string        apikey          = 5;
+  FileSystem    filesystem      = 6;
+}
+
+// Response from an update operation
+message UpdateFsResponse {
+  string    status        = 1;
+}
+
+// Request grant an ip address access to a file system
+message GrantAddrFsRequest {
+    string region          = 1;
+    string acct            = 2;
+    string filesys         = 3;
+    string username        = 4;
+    string apikey          = 5;
+    string ipaddress       = 6;
+}
+
+// Response from granting ip address access to a file system
+message GrantAddrFsResponse {
+  string status           = 1;
+}
+
+// Request revoke an ip address access to a file system
+message RevokeAddrFsRequest {
+    string region          = 1;
+    string acct            = 2;
+    string filesys         = 3;
+    string username        = 4;
+    string apikey          = 5;
+    string ipaddress       = 6;
+}
+
+// Response from revoking ip address access to a file system
+message RevokeAddrFsResponse {
+  string status           = 1;
+}
+
+// Request to validate an addr has access to a file system
+message ValidateAddrFsRequest {
+    string      region      = 1;
+    string      acct        = 2;
+    string      filesys     = 3;
+    IPAddress   addr        = 4;
+}
+// Response from validating an addr has access to a file system
+message ValidateAddrFsResponse {
+    string      status      = 1;
+}
